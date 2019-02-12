@@ -1,5 +1,7 @@
 package bigopool
 
+import "github.com/davecgh/go-spew/spew"
+
 type (
 	Worker struct {
 		// A pool of workers channels that are registered with the dispatcher
@@ -34,6 +36,7 @@ func (w Worker) Start() {
 
 			select {
 			case job := <-w.jobCh:
+				spew.Dump("job is", job)
 				result, err := job.Execute()
 				if err != nil {
 					w.errCh <- err
